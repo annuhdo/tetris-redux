@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import {O, I, Z, T, L} from './Tetromino'
+import {O, L} from './model'
 import Square from './Square'
 import ShapeView from './ShapeView'
 
@@ -12,8 +12,6 @@ class Game extends Component {
     this.state = {
       intervalId: null,
       resume: false,
-      row: 1,
-      col: 5
     }
   }
 
@@ -42,19 +40,16 @@ class Game extends Component {
         break
       case 37:
         // left arrow
-        this.setState({
-          col: Math.max(this.state.col - 1, 1)
-        })
+        this.props.moveLeft()
         break
       case 39:
         // right arrow
-        this.setState({
-          col: Math.min(this.state.col + 1, 9)
-        })
+        this.props.moveRight()
         break
       case 38:
         // up arrow
-        // need to rotate 90 deg
+        this.props.rotate()
+        break
       case 40:
         // down arrow
         // accelerate
@@ -65,12 +60,8 @@ class Game extends Component {
   }
 
   startTick = () => {
-    let row = this.state.row
     let intervalId = setInterval(() => {
-      row += 1
-      this.setState({
-        row
-      })
+      this.props.drop()
     }, 1000)
     this.setState({
       intervalId
@@ -83,11 +74,9 @@ class Game extends Component {
 
   render() {
     return (
-      <div>
-        <button onClick={this.startTick}>Start</button>
-        <button onClick={this.stopTick}>Stop</button>
-        <ShapeView shape={new L(this.state.row, this.state.col, '#ba2894')} />
-      </div>
+       <ShapeView
+        shape={this.props.currentShape}
+        position={this.props.position} />
     )
   }
 }

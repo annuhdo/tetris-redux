@@ -6,7 +6,9 @@ import Main from './Main'
 function mapStateToProps(state) {
   return {
     shapes: state.shapes,
-    grid: state.grid
+    grid: state.grid,
+    position: state.position,
+    currentShape: state.currentShape
   }
 }
 

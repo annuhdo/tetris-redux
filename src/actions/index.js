@@ -12,3 +12,27 @@ export function resetGrid() {
     type: 'START'
   }
 }
+
+export function drop() {
+  return {
+    type: 'DROP'
+  }
+}
+
+export function moveRight() {
+  return {
+    type: 'RIGHT'
+  }
+}
+
+export function moveLeft() {
+  return {
+    type: 'LEFT'
+  }
+}
+
+export function rotate() {
+  return {
+    type: 'ROTATE'
+  }
+}
