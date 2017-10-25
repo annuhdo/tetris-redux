@@ -9,7 +9,6 @@ export function move(state = [], action) {
     default:
       return state
   }
-  return state
 }
 
 export function rotate(state = [], action) {
@@ -21,7 +20,6 @@ export function rotate(state = [], action) {
     default:
       return state
   }
-  return state
 }
 
 function rotateMatrix(matrix) {

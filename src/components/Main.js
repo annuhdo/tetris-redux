@@ -1,46 +1,20 @@
-import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-
-import {O, I, Z, T, L} from './Tetromino'
-import ShapeView from './ShapeView'
+import React from 'react'
 import Grid from './Grid'
 
+const Main = (props) => (
+  <Grid rows={20} cols={10} {...props} />
+)
 
-class Main extends Component {
-  constructor() {
-    super()
+// class Main extends Component {
+//   constructor() {
+//     super()
+//   }
 
-    this.state = {
-      intervalId: null,
-    }
-  }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-    this.stopTick()
-  }
-
-  startTick = () => {
-    let row = 1
-    let intervalId = setInterval(() => {
-      return this.props.append('tomato', row++, 10), 1000
-    })
-    this.setState({
-      intervalId
-    })
-  }
-
-  stopTick = () => {
-    clearInterval(this.state.intervalId)
-  }
-
-  render() {
-    return (
-      <Grid rows={20} cols={10} {...this.props} />
-    )
-  }
+//   render() {
+//     return (
+//       <Grid rows={20} cols={10} {...this.props} />
+//     )
+//   }
 
   // render() {
   //   let data = this.props.shapes
@@ -52,6 +26,6 @@ class Main extends Component {
   //     </div>
   //   )
   // }
-}
+// }
 
 export default Main

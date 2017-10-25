@@ -1,8 +1,4 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
-
-import {O, L} from './model'
-import Square from './Square'
 import ShapeView from './ShapeView'
 
 class Game extends Component {

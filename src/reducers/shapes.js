@@ -9,7 +9,6 @@ function shapes(state = [], action) {
     default:
       return state
   }
-  return state
 }
 
 export default shapes

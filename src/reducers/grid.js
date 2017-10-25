@@ -1,5 +1,3 @@
-import { O } from '../components/Tetromino'
-
 const resetGrid = () => {
   const res = []
   for (let i = 0; i < 20; i++) {
@@ -19,7 +17,6 @@ function grid(state = [], action) {
     default:
       return state
   }
-  return state
 }
 
 export default grid
