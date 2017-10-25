@@ -38,7 +38,7 @@ class Main extends Component {
 
   render() {
     return (
-      <Grid rows={20} cols={10} />
+      <Grid rows={20} cols={10} {...this.props} />
     )
   }
 

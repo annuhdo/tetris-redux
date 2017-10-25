@@ -11,14 +11,15 @@ class Game extends Component {
 
     this.state = {
       intervalId: null,
-      start: false,
+      resume: false,
       row: 1,
       col: 5
     }
   }
 
   componentDidMount() {
-    document.addEventListener("keydown", this.handleKeyPress, false);
+    document.addEventListener("keydown", this.handleKeyPress, false)
+    this.props.resetGrid()
   }
 
   componentWillUnmount() {
@@ -28,25 +29,35 @@ class Game extends Component {
   handleKeyPress = (e) => {
     switch (e.keyCode) {
       case 32:
-        if (this.state.start) {
+        // space bar
+        if (this.state.resume) {
           this.stopTick()
         }
         else {
           this.startTick()
         }
         this.setState({
-          start: !this.state.start
+          resume: !this.state.resume
         })
         break
       case 37:
+        // left arrow
         this.setState({
           col: Math.max(this.state.col - 1, 1)
         })
         break
       case 39:
+        // right arrow
         this.setState({
           col: Math.min(this.state.col + 1, 9)
         })
+        break
+      case 38:
+        // up arrow
+        // need to rotate 90 deg
+      case 40:
+        // down arrow
+        // accelerate
         break
       default:
         break

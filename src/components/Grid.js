@@ -33,7 +33,7 @@ const Grid = (props) => (
   <GridStyle>
     <Board>
       {renderBlocks(props.rows, props.cols)}
-      <Game />
+      <Game {...props} />
     </Board>
   </GridStyle>
 )
