@@ -3,14 +3,14 @@ import { createStore, compose } from 'redux'
 // import the root reducer
 import rootReducer from './reducers'
 
-import {L} from './components/model'
+import {I} from './components/model'
 
 // create an object for the default data
 const defaultState = {
   shapes: [],
   grid: [],
   position: [1,1],
-  currentShape: new L().shape(),
+  currentShape: new I().shape(),
 };
 
 const enhancers = compose(
