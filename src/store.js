@@ -1,12 +1,13 @@
-import { createStore, compose } from 'redux';
+import { createStore, compose } from 'redux'
+import { O } from './components/Tetromino'
 
 // import the root reducer
-import rootReducer from './reducers/index';
-import {O, I, Z, T, L} from './components/Tetromino'
+import rootReducer from './reducers';
 
 // create an object for the default data
 const defaultState = {
-  shapes: [new O(5,5, '#33FF9F'), new L(1,4, '#6133FF')]
+  shapes: [],
+  grid: []
 };
 
 const enhancers = compose(

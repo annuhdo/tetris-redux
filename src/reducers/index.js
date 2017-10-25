@@ -1,7 +1,8 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
-import shapes from './shapes';
+import shapes from './shapes'
+import grid from './grid'
 
-const rootReducer = combineReducers({shapes});
+const rootReducer = combineReducers({shapes, grid})
 
-export default rootReducer;
+export default rootReducer

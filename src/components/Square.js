@@ -6,22 +6,22 @@ import styled from 'styled-components'
 const SquareUnit = styled.div`
   position: absolute;
   background: ${ props => props.color || 'tomato'};
-  width: 25px;
-  height: 25px;
-  left: ${ props => (props.col - 1) * 25}px;
-  top: ${ props => (props.row - 1) * 25}px;
+  width: 50px;
+  height: 50px;
+  left: ${ props => (props.col - 1) * 50}px;
+  top: ${ props => (props.row - 1) * 50}px;
+  border: 1px solid ${ props => props.borderColor || '#031651' };
+  box-sizing: border-box;
 `
 
-class Square extends Component {
-  render() {
-    return (
-      <SquareUnit
-        row={this.props.row}
-        col={this.props.col}
-        color={this.props.color}
-      />
-    )
-  }
-}
+const Square = (props) => (
+  <SquareUnit
+    row={props.row}
+    col={props.col}
+    color={props.color}
+    borderColor={props.borderColor}
+  />
+)
+
 
 export default Square;
