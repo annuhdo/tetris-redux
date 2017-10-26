@@ -9,7 +9,7 @@ import {I} from './components/model'
 const defaultState = {
   shapes: [],
   grid: [],
-  position: [1,1],
+  position: [0, 0],
   currentShape: new I().shape(),
 };
 

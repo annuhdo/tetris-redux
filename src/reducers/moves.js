@@ -3,9 +3,9 @@ export function move(state = [], action) {
     case 'DROP':
       return [state[0] + 1, state[1]]
     case 'RIGHT':
-      return [state[0], Math.min(9, state[1] + 1)]
+      return [state[0], state[1] + 1]
     case 'LEFT':
-      return [state[0], Math.max(1, state[1] - 1)]
+      return [state[0], state[1] - 1]
     default:
       return state
   }

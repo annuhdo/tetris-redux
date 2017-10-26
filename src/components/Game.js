@@ -72,7 +72,10 @@ class Game extends Component {
     return (
        <ShapeView
         shape={this.props.currentShape}
-        position={this.props.position} />
+        position={this.props.position}
+        color='#ba2894'
+        borderColor='#ff4ad6'
+      />
     )
   }
 }

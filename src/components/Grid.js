@@ -1,5 +1,6 @@
 import React from 'react'
 import Square from './Square'
+import ShapeView from './ShapeView'
 import styled from 'styled-components'
 import Game from './Game'
 
@@ -16,23 +17,16 @@ const Board = styled('ul')`
   height: 1000px;
 `
 
-function renderBlocks(rows, cols) {
-  const res = []
-  let key = 1
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      res.push(
-        <Square key={key++} row={i+1} col={j+1} color='#2c2a6c' borderColor='#031651' />
-      )
-    }
-  }
-  return res
-}
-
 const Grid = (props) => (
   <GridStyle>
     <Board>
-      {renderBlocks(props.rows, props.cols)}
+      <ShapeView
+        color='#2c2a6c'
+        borderColor='#031651'
+        shape={props.grid}
+        position={[0, 0]}
+      />
+      {/* {renderBlocks(props.rows, props.cols)} */}
       <Game {...props} />
     </Board>
   </GridStyle>

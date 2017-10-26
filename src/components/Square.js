@@ -19,8 +19,8 @@ const Square = (props) => (
     borderColor={props.borderColor}
     style={
       {
-        left: (props.col - 1) * 50,
-        top: (props.row - 1) * 50,
+        left: (props.col) * 50,
+        top: (props.row) * 50,
       }
     }
   />
