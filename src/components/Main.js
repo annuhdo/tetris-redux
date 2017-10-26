@@ -2,7 +2,7 @@ import React from 'react'
 import Grid from './Grid'
 
 const Main = (props) => (
-  <Grid rows={20} cols={10} {...props} />
+  <Grid {...props} />
 )
 
 // class Main extends Component {

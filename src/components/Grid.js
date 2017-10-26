@@ -25,6 +25,7 @@ const Grid = (props) => (
         borderColor='#031651'
         shape={props.grid}
         position={[0, 0]}
+        grid={true}
       />
       {/* {renderBlocks(props.rows, props.cols)} */}
       <Game {...props} />

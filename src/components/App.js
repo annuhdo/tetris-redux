@@ -8,7 +8,8 @@ function mapStateToProps(state) {
     shapes: state.shapes,
     grid: state.grid,
     position: state.position,
-    currentShape: state.currentShape
+    currentShape: state.currentShape,
+    newShape: state.newShape
   }
 }
 

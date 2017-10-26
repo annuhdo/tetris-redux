@@ -2,20 +2,21 @@ import { createStore, compose } from 'redux'
 
 // import the root reducer
 import rootReducer from './reducers'
-
-import {I} from './components/model'
+import {I, O} from './components/model'
+import { resetGrid } from './helpers'
 
 // create an object for the default data
-const defaultState = {
+export const initialState = {
   shapes: [],
-  grid: [],
+  grid: resetGrid(),
   position: [0, 0],
   currentShape: new I().shape(),
-};
+  newShape: false
+}
 
 const enhancers = compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f
 );
-const store = createStore(rootReducer, defaultState, enhancers);
+const store = createStore(rootReducer, initialState, enhancers);
 
 export default store;

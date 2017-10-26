@@ -13,7 +13,6 @@ class Game extends Component {
 
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress, false)
-    this.props.resetGrid()
   }
 
   componentWillUnmount() {
@@ -25,7 +24,7 @@ class Game extends Component {
       case 32:
         // space bar
         if (this.state.resume) {
-          this.stopTick()
+          this.props.stop()
         }
         else {
           this.startTick()
@@ -57,8 +56,11 @@ class Game extends Component {
 
   startTick = () => {
     let intervalId = setInterval(() => {
+      if (this.props.newShape) {
+        this.stopTick()
+      }
       this.props.drop()
-    }, 1000)
+    }, 600)
     this.setState({
       intervalId
     })

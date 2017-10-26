@@ -1,15 +1,12 @@
-export function append(color, row = 1, col = 10) {
+export function start() {
   return {
-    type: 'TICK',
-    row,
-    col,
-    color
+    type: 'START_GAME'
   }
 }
 
-export function resetGrid() {
+export function stop() {
   return {
-    type: 'START'
+    type: 'STOP_GAME'
   }
 }
 
@@ -21,13 +18,15 @@ export function drop() {
 
 export function moveRight() {
   return {
-    type: 'RIGHT'
+    type: 'SHIFT',
+    payload: 1
   }
 }
 
 export function moveLeft() {
   return {
-    type: 'LEFT'
+    type: 'SHIFT',
+    payload: -1
   }
 }
 

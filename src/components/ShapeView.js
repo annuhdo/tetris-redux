@@ -6,14 +6,18 @@ class ShapeView extends Component {
     const res = []
     let i = 1
 
-    for (let row = 0; row < this.props.shape.length; row++) {
-      for (let col = 0; col < this.props.shape[0].length; col++) {
-        if (this.props.shape[row][col] !== 0) {
+    const shape = this.props.shape
+    const position = this.props.position
+
+    for (let row = 0; row < shape.length; row++) {
+      for (let col = 0; col < shape[0].length; col++) {
+        const check = this.props.grid || shape[row][col] !== 0
+        if (check) {
           res.push(
           <Square
             key={i++}
-            row={this.props.position[0] + row}
-            col={this.props.position[1] + col}
+            row={position[0] + row}
+            col={position[1] + col}
             color={color}
             borderColor={borderColor}
           />)
