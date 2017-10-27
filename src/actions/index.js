@@ -10,6 +10,12 @@ export function stop() {
   }
 }
 
+export function getNewShape() {
+  return {
+    type: 'NEW_SHAPE'
+  }
+}
+
 export function drop() {
   return {
     type: 'DROP'

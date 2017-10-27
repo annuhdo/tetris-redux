@@ -3,7 +3,12 @@ export const resetGrid = () => {
   for (let i = 0; i < 20; i++) {
     const row = []
     for (let j = 0; j < 10; j++) {
-      row.push( 0 )
+      if (i === 19) {
+        row.push(1)
+      }
+      else {
+        row.push( 0 )
+      }
     }
     res.push(row)
   }

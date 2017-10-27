@@ -24,7 +24,7 @@ class Game extends Component {
       case 32:
         // space bar
         if (this.state.resume) {
-          this.props.stop()
+          this.stopTick()
         }
         else {
           this.startTick()
@@ -55,11 +55,17 @@ class Game extends Component {
   }
 
   startTick = () => {
+    this.props.start()
     let intervalId = setInterval(() => {
       if (this.props.newShape) {
+        this.props.getNewShape()
+      }
+      if (this.props.gameStatus === 'STOP') {
         this.stopTick()
       }
-      this.props.drop()
+      else {
+        this.props.drop()
+      }
     }, 600)
     this.setState({
       intervalId
@@ -68,6 +74,7 @@ class Game extends Component {
 
   stopTick = () => {
     clearInterval(this.state.intervalId)
+    this.props.stop()
   }
 
   render() {

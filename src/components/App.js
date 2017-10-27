@@ -9,7 +9,8 @@ function mapStateToProps(state) {
     grid: state.grid,
     position: state.position,
     currentShape: state.currentShape,
-    newShape: state.newShape
+    newShape: state.newShape,
+    gameStatus: state.gameStatus
   }
 }
 
