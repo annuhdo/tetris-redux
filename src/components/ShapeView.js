@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Square from './Square'
+import { Colors } from './model'
 
 class ShapeView extends Component {
   renderSquare(color, borderColor) {
@@ -13,24 +14,15 @@ class ShapeView extends Component {
     for (let row = 0; row < shape.length; row++) {
       for (let col = 0; col < shape[0].length; col++) {
         const check = grid || shape[row][col] !== 0
-        if (grid && shape[row][col] === 1) {
-          res.push(
-            <Square
-              key={i++}
-              row={position[0] + row}
-              col={position[1] + col}
-              color={'#22449d'}
-              borderColor={'#17bcff'}
-            />)
-        }
-        else if (check) {
+        if (check) {
+          const colorMatch = Colors[shape[row][col]]
           res.push(
           <Square
             key={i++}
             row={position[0] + row}
             col={position[1] + col}
-            color={color}
-            borderColor={borderColor}
+            background={colorMatch && colorMatch.background || color}
+            borderColor={colorMatch && colorMatch.borderColor || borderColor}
           />)
         }
       }

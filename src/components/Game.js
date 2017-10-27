@@ -58,7 +58,7 @@ class Game extends Component {
     this.props.start()
     let intervalId = setInterval(() => {
       if (this.props.newShape) {
-        this.props.getNewShape()
+        this.stopTick()
       }
       if (this.props.gameStatus === 'STOP') {
         this.stopTick()
@@ -75,6 +75,11 @@ class Game extends Component {
   stopTick = () => {
     clearInterval(this.state.intervalId)
     this.props.stop()
+
+    if (this.props.newShape) {
+      this.props.getNewShape()
+      this.startTick()
+    }
   }
 
   render() {

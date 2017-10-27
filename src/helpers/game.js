@@ -4,6 +4,9 @@ export const checkCollisions = (shape, position, grid) => {
       if (row + position[0] >= grid.length) {
         return true
       }
+      if (row + position[0] < 0) {
+        return false
+      }
       if (shape[row][col] !== 0) {
         if (grid[row + position[0]] !== 0 &&
         grid[row + position[0]][col + position[1]] !== 0) {

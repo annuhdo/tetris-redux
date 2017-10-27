@@ -2,16 +2,16 @@ import { createStore, compose } from 'redux'
 
 // import the root reducer
 import rootReducer from './reducers'
-import { Shapes } from './components/model'
+import { randomShape } from './components/model'
 import { resetGrid } from './helpers'
 
 // create an object for the default data
 export const initialState = {
   shapes: [],
   grid: resetGrid(),
-  position: [0, 0],
-  currentShape: new Shapes().getRandom(),
-  newShape: false,
+  position: [-3, 5],
+  currentShape: [],
+  newShape: true,
   gameStatus: 'STOP'
 }
 

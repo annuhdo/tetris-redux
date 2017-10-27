@@ -1,3 +1,5 @@
+import { randomShape } from '../components/model'
+
 export function start() {
   return {
     type: 'START_GAME'
@@ -11,8 +13,11 @@ export function stop() {
 }
 
 export function getNewShape() {
+  const newShape = randomShape()
+  console.log({newShape})
   return {
-    type: 'NEW_SHAPE'
+    type: 'NEW_SHAPE',
+    shape: newShape
   }
 }
 

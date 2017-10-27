@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 const SquareUnit = styled.div`
   position: absolute;
-  background: ${ props => props.color || 'tomato'};
+  background: ${ props => props.background || '#2c2a6c'};
   width: 50px;
   height: 50px;
   border: 1px solid ${ props => props.borderColor || '#031651' };
@@ -15,7 +15,7 @@ const Square = (props) => (
   <SquareUnit
     row={props.row}
     col={props.col}
-    color={props.color}
+    background={props.background}
     borderColor={props.borderColor}
     style={
       {

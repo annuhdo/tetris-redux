@@ -1,13 +1,12 @@
 //import { combineReducers } from 'redux'
 import { initialState } from '../store'
-import { Shapes } from '../components/model'
 import { resetGrid, rotateMatrix, checkCollisions } from '../helpers'
 
 function rootReducer(state = initialState, action) {
   const newState = {...state}
   let willCollide = false
   let newPosition = [...state.position]
-  let newShape
+  let newShape = state.currentShape 
 
   switch (action.type) {
     case 'START_GAME':
@@ -21,12 +20,10 @@ function rootReducer(state = initialState, action) {
         gameStatus: 'STOP'
       }
     case 'NEW_SHAPE':
-      const shapes = new Shapes()
-      newShape = shapes.getRandom()
       return {
         ...state,
-        currentShape: newShape,
-        position: [0, 0],
+        currentShape: action.shape,
+        position: [-3, 5],
         newShape: false
       }
     case 'DROP':
