@@ -34,17 +34,37 @@ function rootReducer(state = initialState, action) {
         state.grid)
 
       if (willCollide) {
-        let newGrid = addToGrid(state.currentShape, newPosition, state.position, state.grid)
+        let newGrid = addToGrid(
+          state.currentShape,
+          newPosition,
+          state.position,
+          state.grid)
+
+          const filled = filledLines(newGrid)
+          const clearShape = [...state.currentShape]
+          if (filled > 0) {
+              clearLines(newGrid, filled)
+              clearLines(clearShape, filled)
+          }
+
         return {
           ...state,
           grid: newGrid,
-          newShape: true
+          newShape: true,
+          currentShape: clearShape
         }
+      }
+
+      const grid = [...state.grid]
+      const filled = filledLines(grid)
+      if (filled > 0) {
+          clearLines(grid, filled)
       }
 
       return {
         ...state,
-        position: newPosition
+        position: newPosition,
+        grid: grid
       }
     case 'SHIFT':
       newPosition[1] += action.payload
@@ -91,6 +111,31 @@ const addToGrid = (shape, newPosition, position, grid) => {
     }
   }
   return newGrid
+}
+
+const filledLines = (grid) => {
+  let lines = 0
+  for (let row = grid.length - 1; row >= 0; row--) {
+    for (let col = 0; col < grid[row].length; col++) {
+      if (grid[row][col] === 0) {
+        return lines
+      }
+    }
+    lines += 1
+  }
+
+  return lines
+}
+
+const clearLines = (grid, lines) => {
+  const line = []
+  for (let j = 0; j < grid[0].length; j++) {
+    line.push(0)
+  }
+  for (let i = 0; i < lines; i++) {
+    grid.pop()
+    grid.unshift(line)
+  }
 }
 
 // const rootReducer = combineReducers(

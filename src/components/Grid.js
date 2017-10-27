@@ -15,6 +15,7 @@ const Board = styled('ul')`
   margin: auto;
   width: 500px;
   height: 1000px;
+  overflow: hidden;
 `
 
 const Grid = (props) => (

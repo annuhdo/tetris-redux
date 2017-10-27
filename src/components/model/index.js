@@ -38,9 +38,9 @@ export class O {
 export class T {
   shape(colorMatch) {
     return [
+      [0, 0, 0, 0],
       [0, colorMatch, 0, 0],
-      [colorMatch, colorMatch, colorMatch, 0],
-      [0, 0, 0, 0]
+      [colorMatch, colorMatch, colorMatch, 0]
     ]
   }
 }
@@ -58,6 +58,7 @@ export class Z {
 export class I {
   shape(colorMatch) {
     return [
+      [0, colorMatch, 0, 0],
       [0, colorMatch, 0, 0],
       [0, colorMatch, 0, 0],
       [0, colorMatch, 0, 0]
