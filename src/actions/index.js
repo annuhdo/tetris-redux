@@ -1,4 +1,4 @@
-import { randomShape } from '../components/model'
+import { Shapes } from '../components/model'
 
 export function start() {
   return {
@@ -13,8 +13,7 @@ export function stop() {
 }
 
 export function getNewShape() {
-  const newShape = randomShape()
-  console.log({newShape})
+  const newShape = new Shapes().getRandom()
   return {
     type: 'NEW_SHAPE',
     shape: newShape

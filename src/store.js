@@ -2,7 +2,6 @@ import { createStore, compose } from 'redux'
 
 // import the root reducer
 import rootReducer from './reducers'
-import { randomShape } from './components/model'
 import { resetGrid } from './helpers'
 
 // create an object for the default data

@@ -1,53 +1,68 @@
-export function randomShape() {
-  const rnd = Math.floor(Math.random() * 5)
-  const color = Math.floor(Math.random() * 5) + 1
-  console.log(rnd)
-  switch (rnd) {
-    case 0:
-      return L(color)
-    case 1:
-      return O(color)
-    case 2:
-      return T(color)
-    case 3:
-      return Z(color)
-    case 4:
-      return I(color)
+export class Shapes {
+  constructor() {
+    this.shapes = [
+      new L(),
+      new O(),
+      new T(),
+      new Z(),
+      new I()
+    ]
+  }
+  getRandom() {
+    const shapes = this.shapes
+    const rnd = Math.floor(Math.random() * shapes.length)
+    const color = Math.floor(Math.random() * shapes.length) + 1
+    return shapes[rnd].shape(color)
   }
 }
 
-export function L(colorMatch) {
-  return [
-    [colorMatch, 0, 0, 0],
-    [colorMatch, 0, 0, 0],
-    [colorMatch, colorMatch, 0, 0]]
+export class L {
+  shape(colorMatch) {
+    return [
+      [colorMatch, 0, 0, 0],
+      [colorMatch, 0, 0, 0],
+      [colorMatch, colorMatch, 0, 0]
+    ]
+  }
 }
 
-export function O(colorMatch) {
-  return [
-    [colorMatch, colorMatch, 0, 0],
-    [colorMatch, colorMatch, 0, 0]]
+export class O {
+  shape(colorMatch) {
+    return [
+      [colorMatch, colorMatch, 0, 0],
+      [colorMatch, colorMatch, 0, 0]
+    ]
+  }
 }
 
-export function T(colorMatch) {
-  return [
-    [0, colorMatch, 0, 0],
-    [colorMatch, colorMatch, colorMatch, 0]],
-    [0, 0, 0, 0]
+export class T {
+  shape(colorMatch) {
+    return [
+      [0, colorMatch, 0, 0],
+      [colorMatch, colorMatch, colorMatch, 0],
+      [0, 0, 0, 0]
+    ]
+  }
 }
 
-export function Z(colorMatch) {
-  return [
-    [colorMatch, 0, 0, 0],
-    [colorMatch, colorMatch, 0, 0],
-    [0, colorMatch, 0, 0]]
+export class Z {
+  shape(colorMatch) {
+    return [
+      [colorMatch, 0, 0, 0],
+      [colorMatch, colorMatch, 0, 0],
+      [0, colorMatch, 0, 0]
+    ]
+  }
 }
 
-export function I(colorMatch) {
-  return [
-    [0, colorMatch, 0, 0],
-    [0, colorMatch, 0, 0],
-    [0, colorMatch, 0, 0]]
+export class I {
+  shape(colorMatch) {
+    return [
+      [0, colorMatch, 0, 0],
+      [0, colorMatch, 0, 0],
+      [0, colorMatch, 0, 0]
+    ]
+  }
 }
 
 export const Colors = {
