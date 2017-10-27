@@ -84,13 +84,19 @@ function rootReducer(state = initialState, action) {
       }
     case 'ROTATE':
       newShape = rotateMatrix(state.currentShape)
+
       willCollide = checkCollisions(
         newShape,
         state.position,
         state.grid)
 
+      newPosition = checkBoundaries(newShape, state.position, state.grid)
+
       if (willCollide) {
-        return state
+        return {
+          ...state,
+          position: newPosition
+        }
       }
       return {
         ...state,
@@ -99,6 +105,24 @@ function rootReducer(state = initialState, action) {
     default:
       return state
   }
+}
+
+const checkBoundaries = (shape, position, grid) => {
+  let newPosition = position
+  for (let row = 0; row < shape.length; row++) {
+    for (let col = 0; col < shape[row].length; col++) {
+      if (shape[row][col] !== 0) {
+        if (col + position[1] >= grid[row].length) {
+          const diff = Math.abs(grid[row].length - 1 - (col + position[1]))
+          newPosition[1] = newPosition[1] - diff
+        }
+        if (col + position[1] < 0) {
+          newPosition[1] = newPosition[1] + Math.abs(col + position[1])
+        }
+      }
+    }
+  }
+  return newPosition
 }
 
 const addToGrid = (shape, newPosition, position, grid) => {
