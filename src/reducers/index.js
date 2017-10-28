@@ -67,6 +67,10 @@ function rootReducer(state = initialState, action) {
         grid: grid
       }
     case 'SHIFT':
+      if (state.gameStatus === 'STOP') {
+        return
+      }
+
       newPosition[1] += action.payload
 
       willCollide = checkCollisions(
@@ -83,6 +87,10 @@ function rootReducer(state = initialState, action) {
         position: newPosition
       }
     case 'ROTATE':
+      if (state.gameStatus === 'STOP') {
+        return
+      }
+
       newShape = rotateMatrix(state.currentShape)
 
       willCollide = checkCollisions(
