@@ -4,11 +4,11 @@ import { resetGrid, rotateMatrix, checkCollisions } from '../helpers'
 
 function rootReducer(state = initialState, action) {
   const newState = { ...state }
-  let willCollide = false
   let newPosition = [...state.position]
   let newShape = [...state.currentShape]
   let newGrid = [...state.grid]
-  let filled
+  let filled = 0
+  let willCollide = false
 
   switch (action.type) {
     case 'START_GAME':
@@ -25,7 +25,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         currentShape: action.shape,
-        position: [-3, 5],
+        position: [-2, 5],
         newShape: false
       }
     case 'DROP':
@@ -80,11 +80,11 @@ function rootReducer(state = initialState, action) {
         newPosition,
         state.grid)
 
-        filled = filledLines(newGrid)
-        if (filled > 0) {
-          clearLines(newGrid, filled)
-          clearLines(newShape, filled)
-        }
+      filled = filledLines(newGrid)
+      if (filled > 0) {
+        clearLines(newGrid, filled)
+        clearLines(newShape, filled)
+      }
 
       return {
         ...state,
@@ -176,7 +176,7 @@ const checkBoundaries = (shape, position, grid) => {
 
 const addToGrid = (shape, position, grid) => {
   const newGrid = [...grid]
-  console.log({newGrid})
+  console.log({ newGrid })
   for (let row = 0; row < shape.length; row++) {
     for (let col = 0; col < shape[row].length; col++) {
       if (shape[row][col] !== 0) {

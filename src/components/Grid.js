@@ -6,7 +6,7 @@ import Game from './Game'
 
 const GridStyle = styled('div')`
   height: 1000px;
-  display: grid;
+  display: flex;
 `
 
 const Board = styled('ul')`
