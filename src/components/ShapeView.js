@@ -3,26 +3,28 @@ import Square from './Square'
 import { Colors } from './model'
 
 class ShapeView extends Component {
-  renderSquare(color, borderColor) {
+  renderSquare(background, borderColor) {
     const res = []
     let i = 1
 
     const shape = this.props.shape
     const position = this.props.position
-    const grid = this.props.grid
+    const gridExist = this.props.grid
 
     for (let row = 0; row < shape.length; row++) {
       for (let col = 0; col < shape[0].length; col++) {
-        const check = grid || shape[row][col] !== 0
+        const check = gridExist || shape[row][col] !== 0
         if (check) {
           const colorMatch = Colors[shape[row][col]]
+          const bg = colorMatch && colorMatch.background || background
+          const border = colorMatch && colorMatch.borderColor || borderColor
           res.push(
           <Square
             key={i++}
             row={position[0] + row}
             col={position[1] + col}
-            background={colorMatch && colorMatch.background || color}
-            borderColor={colorMatch && colorMatch.borderColor || borderColor}
+            background={bg}
+            borderColor={border}
           />)
         }
       }
@@ -33,7 +35,7 @@ class ShapeView extends Component {
   render() {
     return (
       <div>
-        {this.renderSquare(this.props.color, this.props.borderColor)}
+        {this.renderSquare(this.props.background, this.props.borderColor)}
       </div>
     )
   }

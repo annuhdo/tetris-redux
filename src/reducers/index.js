@@ -3,10 +3,12 @@ import { initialState } from '../store'
 import { resetGrid, rotateMatrix, checkCollisions } from '../helpers'
 
 function rootReducer(state = initialState, action) {
-  const newState = {...state}
+  const newState = { ...state }
   let willCollide = false
   let newPosition = [...state.position]
-  let newShape = state.currentShape 
+  let newShape = [...state.currentShape]
+  let newGrid = [...state.grid]
+  let filled
 
   switch (action.type) {
     case 'START_GAME':
@@ -34,41 +36,67 @@ function rootReducer(state = initialState, action) {
         state.grid)
 
       if (willCollide) {
-        let newGrid = addToGrid(
+        newGrid = addToGrid(
           state.currentShape,
-          newPosition,
           state.position,
           state.grid)
 
-          const filled = filledLines(newGrid)
-          const clearShape = [...state.currentShape]
-          if (filled > 0) {
-              clearLines(newGrid, filled)
-              clearLines(clearShape, filled)
-          }
+        filled = filledLines(newGrid)
+        if (filled > 0) {
+          clearLines(newGrid, filled)
+          clearLines(newShape, filled)
+        }
 
         return {
           ...state,
           grid: newGrid,
           newShape: true,
-          currentShape: clearShape
+          currentShape: newShape
         }
       }
 
-      const grid = [...state.grid]
-      const filled = filledLines(grid)
+      filled = filledLines(newGrid)
       if (filled > 0) {
-          clearLines(grid, filled)
+        clearLines(newGrid, filled)
       }
 
       return {
         ...state,
         position: newPosition,
-        grid: grid
+        grid: newGrid
       }
+    case 'HARD_DROP':
+      newPosition = dropPosition(state.currentShape, state.position, state.grid)
+
+      if (newPosition[0] === Number.MIN_SAFE_INTEGER) {
+        // GAME OVER
+        return {
+          ...state,
+          gameStatus: 'STOP'
+        }
+      }
+      newGrid = addToGrid(
+        state.currentShape,
+        newPosition,
+        state.grid)
+
+        filled = filledLines(newGrid)
+        if (filled > 0) {
+          clearLines(newGrid, filled)
+          clearLines(newShape, filled)
+        }
+
+      return {
+        ...state,
+        grid: newGrid,
+        position: newPosition,
+        newShape: true,
+        currentShape: newShape
+      }
+
     case 'SHIFT':
       if (state.gameStatus === 'STOP') {
-        return
+        return state
       }
 
       newPosition[1] += action.payload
@@ -88,7 +116,7 @@ function rootReducer(state = initialState, action) {
       }
     case 'ROTATE':
       if (state.gameStatus === 'STOP') {
-        return
+        return state
       }
 
       newShape = rotateMatrix(state.currentShape)
@@ -115,6 +143,19 @@ function rootReducer(state = initialState, action) {
   }
 }
 
+const dropPosition = (shape, position, grid) => {
+  const newPosition = [...position]
+
+  while (!checkCollisions(shape, newPosition, grid)) {
+    newPosition[0] += 1
+  }
+
+  newPosition[0] -= 1
+
+  return newPosition[0] >= 0 ? newPosition : [Number.MIN_SAFE_INTEGER, position[1]]
+
+}
+
 const checkBoundaries = (shape, position, grid) => {
   let newPosition = position
   for (let row = 0; row < shape.length; row++) {
@@ -133,11 +174,15 @@ const checkBoundaries = (shape, position, grid) => {
   return newPosition
 }
 
-const addToGrid = (shape, newPosition, position, grid) => {
+const addToGrid = (shape, position, grid) => {
   const newGrid = [...grid]
+  console.log({newGrid})
   for (let row = 0; row < shape.length; row++) {
     for (let col = 0; col < shape[row].length; col++) {
       if (shape[row][col] !== 0) {
+        if (row + position[0] < 0 || row + position[0] >= grid.length) {
+          return newGrid
+        }
         newGrid[row + position[0]][col + position[1]] = shape[row][col]
       }
     }

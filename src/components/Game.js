@@ -8,6 +8,7 @@ class Game extends Component {
     this.state = {
       intervalId: null,
       resume: false,
+      speed: 500
     }
   }
 
@@ -21,8 +22,8 @@ class Game extends Component {
 
   handleKeyPress = (e) => {
     switch (e.keyCode) {
-      case 32:
-        // space bar
+      case 13:
+        // enter
         if (this.state.resume) {
           this.stopTick()
         }
@@ -32,6 +33,9 @@ class Game extends Component {
         this.setState({
           resume: !this.state.resume
         })
+        break
+      case 32:
+        this.props.hardDrop()
         break
       case 37:
         // left arrow
@@ -48,6 +52,7 @@ class Game extends Component {
       case 40:
         // down arrow
         // accelerate
+        this.props.drop()
         break
       default:
         break
@@ -55,27 +60,30 @@ class Game extends Component {
   }
 
   startTick = () => {
+    this.setState({
+      intervalId: clearInterval(this.state.intervalId)
+    })
     this.props.start()
     let intervalId = setInterval(() => {
       if (this.props.newShape) {
-        clearInterval(this.state.intervalId)
         this.stopTick()
       }
       if (this.props.gameStatus === 'STOP') {
-        clearInterval(this.state.intervalId)
         this.stopTick()
       }
       else {
         this.props.drop()
       }
-    }, 350)
+    }, this.state.speed)
     this.setState({
       intervalId
     })
   }
 
   stopTick = () => {
-    clearInterval(this.state.intervalId)
+    this.setState({
+      intervalId: clearInterval(this.state.intervalId)
+    })
     this.props.stop()
 
     if (this.props.newShape) {
@@ -92,7 +100,7 @@ class Game extends Component {
        <ShapeView
         shape={this.props.currentShape}
         position={this.props.position}
-        color='#ba2894'
+        background='#ba2894'
         borderColor='#ff4ad6'
       />
     )

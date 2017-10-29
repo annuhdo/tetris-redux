@@ -18,11 +18,21 @@ export class Shapes {
 
 export class L {
   shape(colorMatch) {
-    return [
+    const rightL = [
       [colorMatch, 0, 0, 0],
       [colorMatch, 0, 0, 0],
       [colorMatch, colorMatch, 0, 0]
     ]
+
+    const leftL = [
+      [0, 0, colorMatch],
+      [0, 0, colorMatch],
+      [0, colorMatch, colorMatch]
+    ]
+
+    const rnd = Math.floor(Math.random() * 2)
+
+    return rnd % 2 === 0 ? rightL : leftL
   }
 }
 
@@ -47,11 +57,21 @@ export class T {
 
 export class Z {
   shape(colorMatch) {
-    return [
-      [colorMatch, 0, 0, 0],
-      [colorMatch, colorMatch, 0, 0],
-      [0, colorMatch, 0, 0]
+    const rightZ = [
+      [0, 0, 0],
+      [colorMatch, colorMatch, 0],
+      [0, colorMatch, colorMatch]
     ]
+
+    const leftZ = [
+      [0, 0, 0],
+      [0, colorMatch, colorMatch],
+      [colorMatch, colorMatch, 0]
+    ]
+
+    const rnd = Math.floor(Math.random() * 2)
+    
+    return rnd % 2 === 0 ? rightZ : leftZ
   }
 }
 

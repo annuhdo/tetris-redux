@@ -26,6 +26,12 @@ export function drop() {
   }
 }
 
+export function hardDrop() {
+  return {
+    type: 'HARD_DROP'
+  }
+}
+
 export function moveRight() {
   return {
     type: 'SHIFT',

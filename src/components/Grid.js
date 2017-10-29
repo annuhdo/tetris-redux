@@ -22,7 +22,7 @@ const Grid = (props) => (
   <GridStyle>
     <Board>
       <ShapeView
-        color='#2c2a6c'
+        background='#2c2a6c'
         borderColor='#031651'
         shape={props.grid}
         position={[0, 0]}
