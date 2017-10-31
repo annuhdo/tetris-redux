@@ -22,15 +22,18 @@ function rootReducer(state = initialState, action) {
         gameStatus: 'STOP'
       }
     case 'NEW_SHAPE':
-      willCollide = checkCollisions(
-        action.shape,
-        [0, 5],
-        state.grid)
+      const shadowPosition = dropPosition(action.shape, [-2, 5], state.grid)
 
-      if (willCollide) {
+      if (shadowPosition[0] < 0) {
+        newGrid = addToGrid(
+          action.shape,
+          shadowPosition,
+          state.grid)
         return {
           ...state,
+          position: shadowPosition,
           gameStatus: 'GAME_OVER',
+          grid: newGrid,
           newShape: false
         }
       }
@@ -48,43 +51,26 @@ function rootReducer(state = initialState, action) {
       }
       newPosition[0] += 1
 
+      willCollide = checkCollisions(
+        state.currentShape,
+        newPosition,
+        state.grid)
+
       newGrid = clearLines(state.grid)
 
-      if (newPosition[0] === state.shadowPosition[0]) {
-        console.log("collide at the end")
+      if (willCollide) {
         newGrid = addToGrid(
-              state.currentShape,
-              newPosition,
-              state.grid)
-              newGrid = clearLines(state.grid)
-              return {
-                    ...state,
-                    grid: newGrid,
-                    newShape: true,
-                    currentShape: []
-                  }
+          state.currentShape,
+          state.position,
+          state.grid)
+
+        return {
+          ...state,
+          grid: newGrid,
+          newShape: true,
+          currentShape: []
+        }
       }
-
-      // willCollide = checkCollisions(
-      //   state.currentShape,
-      //   newPosition,
-      //   state.grid)
-
-      // newGrid = clearLines(state.grid)
-
-      // if (willCollide) {
-      //   newGrid = addToGrid(
-      //     state.currentShape,
-      //     state.position,
-      //     state.grid)
-
-      //   return {
-      //     ...state,
-      //     grid: newGrid,
-      //     newShape: true,
-      //     currentShape: []
-      //   }
-      // }
 
       return {
         ...state,
@@ -118,6 +104,15 @@ function rootReducer(state = initialState, action) {
       }
 
       newPosition[1] += action.payload
+
+      if (state.position[0] < 0) {
+        return {
+          ...state,
+          position: newPosition,
+          shadowPosition: dropPosition(state.currentShape, newPosition, state.grid),
+        }
+      }
+
 
       willCollide = checkCollisions(
         state.currentShape,
@@ -175,7 +170,7 @@ const dropPosition = (shape, position, grid) => {
 
   newPosition[0] -= 1
 
-  return newPosition[0] >= 0 ? newPosition : [0, position[1]]
+  return newPosition
 }
 
 const checkBoundaries = (shape, position, grid) => {
@@ -198,7 +193,7 @@ const checkBoundaries = (shape, position, grid) => {
 
 const addToGrid = (shape, position, grid) => {
   const newGrid = [...grid]
-  for (let row = 0; row < shape.length; row++) {
+  for (let row = shape.length-1; row >= 0; row--) {
     for (let col = 0; col < shape[row].length; col++) {
       if (shape[row][col] !== 0) {
         if (row + position[0] < 0 || row + position[0] >= grid.length) {
