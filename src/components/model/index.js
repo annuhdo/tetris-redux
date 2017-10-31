@@ -100,8 +100,8 @@ export const Colors = {
     borderColor: '#fdf1b3'
   },
   4: {
-    background: '#7c519a',
-    borderColor: '#c86dff'
+    background: '#b41c48',
+    borderColor: '#F22F5F'
   },
   5: {
     background: '#4a8a82',

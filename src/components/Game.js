@@ -61,23 +61,29 @@ class Game extends Component {
 
   startTick = () => {
     this.setState({
-      intervalId: clearInterval(this.state.intervalId)
-    })
-    this.props.start()
-    let intervalId = setInterval(() => {
-      if (this.props.newShape) {
-        this.stopTick()
-      }
-      if (this.props.gameStatus === 'STOP') {
-        this.stopTick()
-      }
-      else {
-        this.props.drop()
-      }
-    }, this.state.speed)
-    this.setState({
-      intervalId
-    })
+    intervalId: clearInterval(this.state.intervalId)
+  })
+    if (this.props.gameStatus === 'GAME_OVER') {
+      console.log("can't start another interval!!")
+    }
+    else {
+      this.props.start()
+      let intervalId = setInterval(() => {
+        if (this.props.newShape) {
+          this.stopTick()
+        }
+        if (this.props.gameStatus === 'STOP' ||
+        this.props.gameStatus === 'GAME_OVER') {
+          this.stopTick()
+        }
+        else {
+          this.props.drop()
+        }
+      }, this.state.speed)
+      this.setState({
+        intervalId
+      })
+    }
   }
 
   stopTick = () => {
@@ -97,12 +103,19 @@ class Game extends Component {
 
   render() {
     return (
+      <div>
+        <ShapeView
+        shape={this.props.currentShape}
+        position={this.props.shadowPosition}
+        shadow={true}
+        background='#514271'
+        borderColor='#7975a7'
+      />
        <ShapeView
         shape={this.props.currentShape}
         position={this.props.position}
-        background='#ba2894'
-        borderColor='#ff4ad6'
       />
+      </div>
     )
   }
 }

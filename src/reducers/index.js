@@ -22,75 +22,87 @@ function rootReducer(state = initialState, action) {
         gameStatus: 'STOP'
       }
     case 'NEW_SHAPE':
+      willCollide = checkCollisions(
+        action.shape,
+        [0, 5],
+        state.grid)
+
+      if (willCollide) {
+        return {
+          ...state,
+          gameStatus: 'GAME_OVER',
+          newShape: false
+        }
+      }
+
       return {
         ...state,
         currentShape: action.shape,
         position: [-2, 5],
+        shadowPosition: dropPosition(action.shape, [0, 5], state.grid),
         newShape: false
       }
     case 'DROP':
+      if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
+        return state
+      }
       newPosition[0] += 1
 
-      if (newPosition[0] < -2) {
-        console.log("GAME OVER")
-      }
+      newGrid = clearLines(state.grid)
 
-      willCollide = checkCollisions(
-        state.currentShape,
-        newPosition,
-        state.grid)
-
-      if (willCollide) {
+      if (newPosition[0] === state.shadowPosition[0]) {
+        console.log("collide at the end")
         newGrid = addToGrid(
-          state.currentShape,
-          state.position,
-          state.grid)
-
-        filledRows = filledLines(newGrid)
-        if (filledRows.length > 0) {
-          clearLines(newGrid, filledRows)
-        }
-
-        return {
-          ...state,
-          grid: newGrid,
-          newShape: true,
-          currentShape: []
-        }
+              state.currentShape,
+              newPosition,
+              state.grid)
+              newGrid = clearLines(state.grid)
+              return {
+                    ...state,
+                    grid: newGrid,
+                    newShape: true,
+                    currentShape: []
+                  }
       }
 
-      filledRows = filledLines(newGrid)
-      if (filledRows.length > 0) {
-        clearLines(newGrid, filledRows)
-      }
+      // willCollide = checkCollisions(
+      //   state.currentShape,
+      //   newPosition,
+      //   state.grid)
+
+      // newGrid = clearLines(state.grid)
+
+      // if (willCollide) {
+      //   newGrid = addToGrid(
+      //     state.currentShape,
+      //     state.position,
+      //     state.grid)
+
+      //   return {
+      //     ...state,
+      //     grid: newGrid,
+      //     newShape: true,
+      //     currentShape: []
+      //   }
+      // }
 
       return {
         ...state,
         position: newPosition,
+        shadowPosition: dropPosition(state.currentShape, newPosition, state.grid),
         grid: newGrid
       }
     case 'HARD_DROP':
-      if (newPosition[0] < 0) {
+      if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
         return state
       }
       newPosition = dropPosition(state.currentShape, state.position, state.grid)
-
-      if (newPosition[0] < -2) {
-        // GAME OVER
-        return {
-          ...state,
-          gameStatus: 'STOP'
-        }
-      }
       newGrid = addToGrid(
         state.currentShape,
         newPosition,
         state.grid)
 
-      filledRows = filledLines(newGrid)
-      if (filledRows.length > 0) {
-        clearLines(newGrid, filledRows)
-      }
+      newGrid = clearLines(newGrid)
 
       return {
         ...state,
@@ -101,7 +113,7 @@ function rootReducer(state = initialState, action) {
       }
 
     case 'SHIFT':
-      if (state.gameStatus === 'STOP') {
+      if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
         return state
       }
 
@@ -118,10 +130,11 @@ function rootReducer(state = initialState, action) {
 
       return {
         ...state,
-        position: newPosition
+        position: newPosition,
+        shadowPosition: dropPosition(state.currentShape, newPosition, state.grid),
       }
     case 'ROTATE':
-      if (state.gameStatus === 'STOP') {
+      if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
         return state
       }
 
@@ -135,16 +148,17 @@ function rootReducer(state = initialState, action) {
       newPosition = checkBoundaries(newShape, state.position, state.grid)
 
       if (willCollide) {
-        console.log("rotate collision")
         return {
           ...state,
-          position: newPosition
+          position: newPosition,
+          shadowPosition: dropPosition(state.currentShape, newPosition, state.grid)
         }
       }
       else {
         return {
           ...state,
-          currentShape: newShape
+          currentShape: newShape,
+          shadowPosition: dropPosition(state.currentShape, state.position, state.grid)
         }
       }
     default:
@@ -161,8 +175,7 @@ const dropPosition = (shape, position, grid) => {
 
   newPosition[0] -= 1
 
-  return newPosition[0] >= -2 ? newPosition : [Number.MIN_SAFE_INTEGER, position[1]]
-
+  return newPosition[0] >= 0 ? newPosition : [0, position[1]]
 }
 
 const checkBoundaries = (shape, position, grid) => {
@@ -185,7 +198,6 @@ const checkBoundaries = (shape, position, grid) => {
 
 const addToGrid = (shape, position, grid) => {
   const newGrid = [...grid]
-  console.log({ newGrid })
   for (let row = 0; row < shape.length; row++) {
     for (let col = 0; col < shape[row].length; col++) {
       if (shape[row][col] !== 0) {
@@ -199,30 +211,23 @@ const addToGrid = (shape, position, grid) => {
   return newGrid
 }
 
-const filledLines = (grid) => {
-  let rows = []
-  for (let row = 0; row < grid.length; row++) {
+const clearLines = (originalGrid) => {
+  const grid = [...originalGrid]
+  for (let row = 0; row < originalGrid.length; row++) {
     let toClear = true
-    for (let col = 0; col < grid[row].length; col++) {
-      if (grid[row][col] === 0) {
+    for (let col = 0; col < originalGrid[row].length; col++) {
+      if (originalGrid[row][col] === 0) {
         toClear = false
         break
       }
     }
     if (toClear) {
-      rows.push(row)
+      grid.splice(row, 1)
+      grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
     }
   }
 
-  return rows
-}
-
-const clearLines = (grid, rows) => {
-  console.log(rows)
-  for (let row = 0; row < rows.length; row++) {
-    grid.splice(rows[0], 1)
-    grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  }
+  return grid
 }
 
 // const rootReducer = combineReducers(

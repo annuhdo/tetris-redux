@@ -8,7 +8,8 @@ import { resetGrid } from './helpers'
 export const initialState = {
   shapes: [],
   grid: resetGrid(),
-  position: [0, 5],
+  position: [-2, 5],
+  shadowPosition: [-2, 5],
   currentShape: [],
   newShape: true,
   gameStatus: 'STOP'

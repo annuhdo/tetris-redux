@@ -10,14 +10,15 @@ class ShapeView extends Component {
     const shape = this.props.shape
     const position = this.props.position
     const gridExist = this.props.grid
+    const shadowExist = this.props.shadow
 
     for (let row = 0; row < shape.length; row++) {
       for (let col = 0; col < shape[0].length; col++) {
         const check = gridExist || shape[row][col] !== 0
         if (check) {
           const colorMatch = Colors[shape[row][col]]
-          const bg = colorMatch && colorMatch.background || background
-          const border = colorMatch && colorMatch.borderColor || borderColor
+          const bg = !shadowExist && colorMatch && colorMatch.background || background
+          const border = !shadowExist && colorMatch && colorMatch.borderColor || borderColor
           res.push(
           <Square
             key={i++}

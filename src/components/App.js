@@ -8,6 +8,7 @@ function mapStateToProps(state) {
     shapes: state.shapes,
     grid: state.grid,
     position: state.position,
+    shadowPosition: state.shadowPosition,
     currentShape: state.currentShape,
     newShape: state.newShape,
     gameStatus: state.gameStatus
