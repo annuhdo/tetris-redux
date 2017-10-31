@@ -7,7 +7,7 @@ function rootReducer(state = initialState, action) {
   let newPosition = [...state.position]
   let newShape = [...state.currentShape]
   let newGrid = [...state.grid]
-  let filled = 0
+  let filledRows = []
   let willCollide = false
 
   switch (action.type) {
@@ -30,6 +30,11 @@ function rootReducer(state = initialState, action) {
       }
     case 'DROP':
       newPosition[0] += 1
+
+      if (newPosition[0] < -2) {
+        console.log("GAME OVER")
+      }
+
       willCollide = checkCollisions(
         state.currentShape,
         newPosition,
@@ -41,23 +46,22 @@ function rootReducer(state = initialState, action) {
           state.position,
           state.grid)
 
-        filled = filledLines(newGrid)
-        if (filled > 0) {
-          clearLines(newGrid, filled)
-          clearLines(newShape, filled)
+        filledRows = filledLines(newGrid)
+        if (filledRows.length > 0) {
+          clearLines(newGrid, filledRows)
         }
 
         return {
           ...state,
           grid: newGrid,
           newShape: true,
-          currentShape: newShape
+          currentShape: []
         }
       }
 
-      filled = filledLines(newGrid)
-      if (filled > 0) {
-        clearLines(newGrid, filled)
+      filledRows = filledLines(newGrid)
+      if (filledRows.length > 0) {
+        clearLines(newGrid, filledRows)
       }
 
       return {
@@ -66,9 +70,12 @@ function rootReducer(state = initialState, action) {
         grid: newGrid
       }
     case 'HARD_DROP':
+      if (newPosition[0] < 0) {
+        return state
+      }
       newPosition = dropPosition(state.currentShape, state.position, state.grid)
 
-      if (newPosition[0] === Number.MIN_SAFE_INTEGER) {
+      if (newPosition[0] < -2) {
         // GAME OVER
         return {
           ...state,
@@ -80,10 +87,9 @@ function rootReducer(state = initialState, action) {
         newPosition,
         state.grid)
 
-      filled = filledLines(newGrid)
-      if (filled > 0) {
-        clearLines(newGrid, filled)
-        clearLines(newShape, filled)
+      filledRows = filledLines(newGrid)
+      if (filledRows.length > 0) {
+        clearLines(newGrid, filledRows)
       }
 
       return {
@@ -91,7 +97,7 @@ function rootReducer(state = initialState, action) {
         grid: newGrid,
         position: newPosition,
         newShape: true,
-        currentShape: newShape
+        currentShape: []
       }
 
     case 'SHIFT':
@@ -129,14 +135,17 @@ function rootReducer(state = initialState, action) {
       newPosition = checkBoundaries(newShape, state.position, state.grid)
 
       if (willCollide) {
+        console.log("rotate collision")
         return {
           ...state,
           position: newPosition
         }
       }
-      return {
-        ...state,
-        currentShape: newShape
+      else {
+        return {
+          ...state,
+          currentShape: newShape
+        }
       }
     default:
       return state
@@ -152,7 +161,7 @@ const dropPosition = (shape, position, grid) => {
 
   newPosition[0] -= 1
 
-  return newPosition[0] >= 0 ? newPosition : [Number.MIN_SAFE_INTEGER, position[1]]
+  return newPosition[0] >= -2 ? newPosition : [Number.MIN_SAFE_INTEGER, position[1]]
 
 }
 
@@ -191,27 +200,28 @@ const addToGrid = (shape, position, grid) => {
 }
 
 const filledLines = (grid) => {
-  let lines = 0
-  for (let row = grid.length - 1; row >= 0; row--) {
+  let rows = []
+  for (let row = 0; row < grid.length; row++) {
+    let toClear = true
     for (let col = 0; col < grid[row].length; col++) {
       if (grid[row][col] === 0) {
-        return lines
+        toClear = false
+        break
       }
     }
-    lines += 1
+    if (toClear) {
+      rows.push(row)
+    }
   }
 
-  return lines
+  return rows
 }
 
-const clearLines = (grid, lines) => {
-  const line = []
-  for (let j = 0; j < grid[0].length; j++) {
-    line.push(0)
-  }
-  for (let i = 0; i < lines; i++) {
-    grid.pop()
-    grid.unshift(line)
+const clearLines = (grid, rows) => {
+  console.log(rows)
+  for (let row = 0; row < rows.length; row++) {
+    grid.splice(rows[0], 1)
+    grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   }
 }
 
