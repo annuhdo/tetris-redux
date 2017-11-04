@@ -31,3 +31,37 @@ export const rotateMatrix = (original) => {
   }
   return matrix
 }
+
+export const addToGrid = (shape, position, grid) => {
+  const newGrid = [...grid]
+  for (let row = shape.length-1; row >= 0; row--) {
+    for (let col = 0; col < shape[row].length; col++) {
+      if (shape[row][col] !== 0) {
+        if (row + position[0] < 0 || row + position[0] >= grid.length) {
+          return newGrid
+        }
+        newGrid[row + position[0]][col + position[1]] = shape[row][col]
+      }
+    }
+  }
+  return newGrid
+}
+
+export const clearLines = (originalGrid) => {
+  const grid = [...originalGrid]
+  for (let row = 0; row < originalGrid.length; row++) {
+    let toClear = true
+    for (let col = 0; col < originalGrid[row].length; col++) {
+      if (originalGrid[row][col] === 0) {
+        toClear = false
+        break
+      }
+    }
+    if (toClear) {
+      grid.splice(row, 1)
+      grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    }
+  }
+
+  return grid
+}

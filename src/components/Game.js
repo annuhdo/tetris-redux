@@ -6,9 +6,7 @@ class Game extends Component {
     super()
 
     this.state = {
-      intervalId: null,
       resume: false,
-      speed: 500,
       timer: null
     }
   }
@@ -80,48 +78,6 @@ class Game extends Component {
         break
     }
   }
-
-  // startTick = () => {
-  //   this.setState({
-  //   intervalId: clearInterval(this.state.intervalId)
-  // })
-  //   if (this.props.gameStatus === 'GAME_OVER') {
-  //     console.log("can't start another interval!!")
-  //   }
-  //   else {
-  //     this.props.start()
-  //     let intervalId = setInterval(() => {
-  //       if (this.props.newShape) {
-  //         this.stopTick()
-  //       }
-  //       if (this.props.gameStatus === 'STOP' ||
-  //       this.props.gameStatus === 'GAME_OVER') {
-  //         this.stopTick()
-  //       }
-  //       else {
-  //         this.props.drop()
-  //       }
-  //     }, this.state.speed)
-  //     this.setState({
-  //       intervalId
-  //     })
-  //   }
-  // }
-
-  // stopTick = () => {
-  //   this.setState({
-  //     intervalId: clearInterval(this.state.intervalId)
-  //   })
-  //   this.props.stop()
-
-  //   if (this.props.newShape) {
-  //     this.props.getNewShape()
-
-  //     if (this.state.resume) {
-  //       this.startTick()
-  //     }
-  //   }
-  // }
 
   render() {
     return (

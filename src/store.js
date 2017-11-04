@@ -1,11 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { createLogger } from 'redux-logger'
 // import the root reducer
 import rootReducer from './reducers'
 import { resetGrid } from './helpers'
-
-const loggerMiddleware = createLogger()
 
 // create an object for the default data
 export const initialState = {
@@ -28,8 +25,7 @@ window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
 
 const enhancer = composeEnhancers(
   applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware
+    thunkMiddleware
   ),
 )
 
