@@ -12,7 +12,7 @@ import {
 
 function rootReducer(state = initialState, action) {
   let willCollide = false
-  let newState = {...state}
+  let newState = { ...state }
 
   let {
     grid,
@@ -54,10 +54,10 @@ function rootReducer(state = initialState, action) {
 
       if (willCollide) {
         position[0] -= 1 // backtrack
-          let newGrid = addToGrid(
-            state.currentShape,
-            position,
-            state.grid)
+        let newGrid = addToGrid(
+          state.currentShape,
+          position,
+          state.grid)
 
         return {
           ...state,
@@ -76,6 +76,10 @@ function rootReducer(state = initialState, action) {
       }
     case 'HARD_DROP':
       if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
+        return state
+      }
+
+      if (state.currentShape.length === 0 || state.position[0] < -1) {
         return state
       }
       position = dropPosition(state.currentShape, state.position, state.grid)
@@ -100,15 +104,6 @@ function rootReducer(state = initialState, action) {
       }
 
       position[1] += action.payload
-
-      if (state.position[0] < 0) {
-        return {
-          ...state,
-          position: position,
-          shadowPosition: dropPosition(state.currentShape, position, state.grid),
-        }
-      }
-
 
       willCollide = checkCollisions(
         state.currentShape,
