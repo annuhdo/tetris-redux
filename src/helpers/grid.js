@@ -1,6 +1,6 @@
 export const resetGrid = () => {
   const res = []
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 17; i++) {
     const row = []
     for (let j = 0; j < 10; j++) {
       row.push( 0 )

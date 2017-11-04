@@ -1,12 +1,24 @@
 import { Shapes } from '../components/model'
 
+export function resetGrid() {
+  return {
+    type: 'RESET_GAME'
+  }
+}
+
+export function start() {
+  return {
+    type: 'START_GAME'
+  }
+}
+
 export function stop() {
   return {
     type: 'STOP_GAME'
   }
 }
 
-export function getNewShape() {
+function getNewShape() {
   const newShape = new Shapes().getRandom()
   return {
     type: 'NEW_SHAPE',
@@ -14,7 +26,7 @@ export function getNewShape() {
   }
 }
 
-export function drop() {
+function drop() {
   return {
     type: 'DROP'
   }
@@ -37,12 +49,6 @@ export function dropTimer() {
     setTimeout(() => {
       dispatch(dropTimer())
     }, getState().accelerate ? 150 : 500)
-  }
-}
-
-export function start() {
-  return (dispatch, getState) => {
-    dispatch({type: 'START_GAME'})
   }
 }
 

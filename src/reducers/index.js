@@ -12,18 +12,25 @@ import {
 
 function rootReducer(state = initialState, action) {
   let willCollide = false
-  let newState = { ...state }
-
-  let {
-    grid,
-    position,
-    shadowPosition,
-    currentShape,
-    gameStatus,
-    speed
-  } = newState
+  let grid = [...state.grid]
+  let position = [...state.position]
+  let shadowPosition = [...state.shadowPosition]
+  let currentShape = [...state.currentShape]
+  let gameStatus = state.gameStatus
+  let speed = state.speed
 
   switch (action.type) {
+    case 'RESET_GAME':
+      return {
+        ...state,
+        grid: resetGrid(),
+        position: [-2, 5],
+        shadowPosition: [-2, 5],
+        currentShape: [],
+        newShape: true,
+        gameStatus: 'STOP',
+        speed: false
+      }
     case 'START_GAME':
       return {
         ...state,
@@ -35,6 +42,9 @@ function rootReducer(state = initialState, action) {
         gameStatus: 'STOP'
       }
     case 'NEW_SHAPE':
+    if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
+      return state
+    }
       return {
         ...state,
         currentShape: action.shape,
@@ -43,6 +53,10 @@ function rootReducer(state = initialState, action) {
         newShape: false
       }
     case 'DROP':
+
+    if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
+      return state
+    }
       position[0] += 1
 
       grid = clearLines(state.grid)
@@ -103,7 +117,15 @@ function rootReducer(state = initialState, action) {
         return state
       }
 
+      if (state.newShape) {
+        return state
+      }
+
       position[1] += action.payload
+
+      if (position[1] < 0 || position[1] >= grid[0].length) {
+        return state
+      }
 
       willCollide = checkCollisions(
         state.currentShape,

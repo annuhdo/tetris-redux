@@ -6,7 +6,6 @@ import { resetGrid } from './helpers'
 
 // create an object for the default data
 export const initialState = {
-  shapes: [],
   grid: resetGrid(),
   position: [-2, 5],
   shadowPosition: [-2, 5],

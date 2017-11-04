@@ -2,11 +2,13 @@ import React from 'react'
 
 import styled from 'styled-components'
 
+const sqSize = 40
+
 const SquareUnit = styled.div`
   position: absolute;
   background: ${ props => props.background || '#2c2a6c'};
-  width: 50px;
-  height: 50px;
+  width: ${sqSize}px;
+  height: ${sqSize}px;
   border: 1px solid ${ props => props.borderColor || '#031651' };
   box-sizing: border-box;
 `
@@ -19,8 +21,8 @@ const Square = (props) => (
     borderColor={props.borderColor}
     style={
       {
-        left: (props.col) * 50,
-        top: (props.row) * 50,
+        left: (props.col) * sqSize,
+        top: (props.row) * sqSize,
       }
     }
   />

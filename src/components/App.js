@@ -5,12 +5,10 @@ import Main from './Main'
 
 function mapStateToProps(state) {
   return {
-    shapes: state.shapes,
     grid: state.grid,
     position: state.position,
     shadowPosition: state.shadowPosition,
     currentShape: state.currentShape,
-    newShape: state.newShape,
     gameStatus: state.gameStatus
   }
 }
