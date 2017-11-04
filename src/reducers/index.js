@@ -46,9 +46,9 @@ function rootReducer(state = initialState, action) {
         newShape: false
       }
     case 'DROP':
-      if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
-        return state
-      }
+      // if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
+      //   return state
+      // }
       newPosition[0] += 1
 
       willCollide = checkCollisions(
@@ -155,6 +155,16 @@ function rootReducer(state = initialState, action) {
           currentShape: newShape,
           shadowPosition: dropPosition(state.currentShape, state.position, state.grid)
         }
+      }
+    case 'ACCELERATE':
+      return {
+        ...state,
+        accelerate: true
+      }
+    case 'DECELERATE':
+      return {
+        ...state,
+        accelerate: false
       }
     default:
       return state
