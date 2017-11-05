@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import Grid from './Grid'
-import styled, { injectGlobal } from 'styled-components'
+import styled, { injectGlobal, keyframes } from 'styled-components'
 
 injectGlobal`
 @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
   body {
     margin: 0;
     padding: 0;
-    background: #201429;
+    background: #0f2663;
+    font-family: 'Press Start 2P', cursive;
   }
 `;
 
@@ -15,6 +16,7 @@ const Emulator = styled('div') `
   display: flex;
 	align-items: center;
 	justify-content: center;
+  flex-direction: column;
 `
 
 const OuterGame = styled('div') `
@@ -28,7 +30,7 @@ const OuterGame = styled('div') `
 
   &:before {
     content: ' ';
-    background: #2b1d30;
+    background: #031850;
     width: 500px;
     height: 100%;
     position: absolute;
@@ -49,7 +51,6 @@ const Controls = styled('div') `
 const DirButtons = styled('div') `
   width: 210px;
   height: 200px;
-	background: #221C2A;
   border-radius: 5px;
   border-top-right-radius: 50px;
   border-bottom-left-radius: 50px;
@@ -93,7 +94,7 @@ const CtrlButton = styled(Button) `
 `
 
 const ResetButton = styled(CtrlButton) `
-  background: linear-gradient(0deg, #200818, #221C2A);
+  background: #09c1ff;
 	border-top-right-radius: 5px;
 	padding: 15px 20px;
 `
@@ -101,12 +102,61 @@ const ResetButton = styled(CtrlButton) `
 const PlayButton = styled(CtrlButton) `
   margin-top: 10px;
   padding: 15px 20px;
-  background: linear-gradient(0deg, #3c2b4a, #593465);
+  background: #ffd63a;
+  color: #000;
 `
 
 const SpaceButton = styled(CtrlButton) `
 	margin-top: 20px;
 	border-bottom-left-radius: 5px;
+`
+
+const Score = styled('div')`
+  color: #ffd63a;
+  margin: 20px 0;
+  font-size: 16px;
+`
+
+const rainbowColor = keyframes`
+  0% {
+    color: #e15690;
+  }
+  25% {
+    color: #ffd63a;
+  }
+  50% {
+    color: #09c1ff;
+  }
+  100% {
+    color: #fff;
+  }
+`
+
+const Footnote = styled('div')`
+  position: absolute;
+  padding-bottom: 20px;
+  bottom: 20px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #fff;
+
+  a {
+    color: #e15690;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 20px 20px 20px 0;
+  }
+
+  a:hover {
+    text-decoration: initial;
+  }
+
+  &:hover {
+    a {
+      animation: ${rainbowColor} 1s linear infinite;
+    }
+  }
+
 `
 
 class Main extends Component {
@@ -146,6 +196,7 @@ class Main extends Component {
         this.play()
         break
       case 32:
+        // space bar
         this.moves('space')
         break
       case 37:
@@ -272,6 +323,7 @@ class Main extends Component {
     return (
       <Emulator>
         <OuterGame>
+          <Score>Score: {this.props.score}</Score>
           <Grid {...this.props} />
 
           <Controls>
@@ -338,8 +390,9 @@ class Main extends Component {
               > Space Bar </SpaceButton>
             </CtrlButtons>
           </Controls>
+        <Footnote>
+          Made by <a href="https://twitter.com/annuhdo">@annuhdo</a> </Footnote>
         </OuterGame>
-
       </Emulator>
     )
   }

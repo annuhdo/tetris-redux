@@ -9,7 +9,7 @@ const GridStyle = styled('div')`
   height: 680px;
   display: flex;
   position: relative;
-  background: linear-gradient(0deg, #302034, #b5223e);
+  background: linear-gradient(0deg, #132967, #22449d);
   border-bottom: 1px solid #E15691;
   border-top: 1px solid #E15691;
 `
@@ -28,7 +28,7 @@ const Grid = (props) => (
     <Board>
       <ShapeView
         background='transparent'
-        borderColor='#20142a'
+        borderColor='transparent'
         shape={props.grid}
         position={[0, 0]}
         grid={true}

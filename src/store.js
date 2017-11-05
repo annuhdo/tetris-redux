@@ -12,7 +12,8 @@ export const initialState = {
   currentShape: [],
   newShape: true,
   gameStatus: 'STOP',
-  speed: false
+  accelerate: false,
+  score: 0
 }
 
 const composeEnhancers =

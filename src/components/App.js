@@ -9,7 +9,8 @@ function mapStateToProps(state) {
     position: state.position,
     shadowPosition: state.shadowPosition,
     currentShape: state.currentShape,
-    gameStatus: state.gameStatus
+    gameStatus: state.gameStatus,
+    score: state.score
   }
 }
 

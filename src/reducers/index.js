@@ -12,12 +12,14 @@ import {
 
 function rootReducer(state = initialState, action) {
   let willCollide = false
+  let clearedGrid = {}
   let grid = [...state.grid]
   let position = [...state.position]
   let shadowPosition = [...state.shadowPosition]
   let currentShape = [...state.currentShape]
   let gameStatus = state.gameStatus
-  let speed = state.speed
+  let accelerate = state.accelerate
+  let score = state.score
 
   switch (action.type) {
     case 'RESET_GAME':
@@ -29,7 +31,8 @@ function rootReducer(state = initialState, action) {
         currentShape: [],
         newShape: true,
         gameStatus: 'STOP',
-        speed: false
+        accelerate: false,
+        score: 0
       }
     case 'START_GAME':
       return {
@@ -42,9 +45,6 @@ function rootReducer(state = initialState, action) {
         gameStatus: 'STOP'
       }
     case 'NEW_SHAPE':
-    if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
-      return state
-    }
       return {
         ...state,
         currentShape: action.shape,
@@ -59,7 +59,9 @@ function rootReducer(state = initialState, action) {
     }
       position[0] += 1
 
-      grid = clearLines(state.grid)
+      clearedGrid = clearLines(state.grid)
+      grid = clearedGrid.grid
+      score = clearedGrid.score
 
       willCollide = checkCollisions(
         state.currentShape,
@@ -78,7 +80,8 @@ function rootReducer(state = initialState, action) {
           grid: position[0] <= -1 ? grid : newGrid,
           newShape: position[0] <= -1 ? false : true,
           currentShape: [],
-          gameStatus: position[0] <= -1 ? 'GAME_OVER' : state.gameStatus
+          gameStatus: position[0] <= -1 ? 'GAME_OVER' : state.gameStatus,
+          score: state.score + score
         }
       }
 
@@ -86,7 +89,8 @@ function rootReducer(state = initialState, action) {
         ...state,
         position: position,
         shadowPosition: dropPosition(state.currentShape, position, state.grid),
-        grid
+        grid,
+        score: state.score + score + 2
       }
     case 'HARD_DROP':
       if (state.gameStatus === 'STOP' || state.gameStatus === 'GAME_OVER') {
@@ -102,14 +106,17 @@ function rootReducer(state = initialState, action) {
         position,
         state.grid)
 
-      grid = clearLines(grid)
+      clearedGrid = clearLines(grid)
+      grid = clearedGrid.grid
+      score = clearedGrid.score
 
       return {
         ...state,
         grid,
         position: position,
         newShape: true,
-        currentShape: []
+        currentShape: [],
+        score: state.score + score
       }
 
     case 'SHIFT':
@@ -122,10 +129,6 @@ function rootReducer(state = initialState, action) {
       }
 
       position[1] += action.payload
-
-      if (position[1] < 0 || position[1] >= grid[0].length) {
-        return state
-      }
 
       willCollide = checkCollisions(
         state.currentShape,
