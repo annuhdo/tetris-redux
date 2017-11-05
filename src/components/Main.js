@@ -186,6 +186,15 @@ class Main extends Component {
         // decelerate
         this.decelerate()
         break
+      case 32:
+      // space
+        e.preventDefault()
+        break
+      case 13:
+        e.preventDefault()
+        break
+      default:
+        break
     }
   }
 
@@ -382,7 +391,15 @@ class Main extends Component {
               <PlayButton
                 name="play"
                 onClick={this.handleClick}
-              > {this.props.gameStatus === 'STOP' ? 'Play' : 'Pause'} </PlayButton>
+              >
+                {
+                  this.props.gameStatus === 'START' ?
+                    'Pause' :
+                    this.props.gameStatus === 'STOP' ?
+                      'Play' :
+                      'Game Over'
+                }
+              </PlayButton>
 
               <SpaceButton
                 name="space"

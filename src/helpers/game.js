@@ -47,3 +47,37 @@ export const dropPosition = (shape, position, grid) => {
 
   return newPosition
 }
+
+export const clearLines = (originalGrid) => {
+  const grid = [...originalGrid]
+  let score = 0
+  for (let row = 0; row < originalGrid.length; row++) {
+    let toClear = true
+    for (let col = 0; col < originalGrid[row].length; col++) {
+      if (originalGrid[row][col] === 0) {
+        toClear = false
+        break
+      }
+    }
+    if (toClear) {
+      score += 1
+      grid.splice(row, 1)
+      grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    }
+  }
+
+  if (score % 4 === 0) {
+    score = (score / 4) * 1200
+  }
+  else if (score % 3 === 0) {
+    score = (score / 3) * 300
+  }
+  else if (score % 2 === 0) {
+    score = (score / 2) * 100
+  }
+  else {
+    score = score * 40
+  }
+  
+  return {grid, score}
+}

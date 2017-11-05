@@ -7,14 +7,26 @@ export function resetGrid() {
 }
 
 export function start() {
-  return {
-    type: 'START_GAME'
+  return (dispatch, getState) => {
+    const { gameStatus } = getState()
+
+    if (gameStatus === 'GAME_OVER') {
+      return
+    }
+    
+    dispatch({ type: 'START_GAME' })
   }
 }
 
 export function stop() {
-  return {
-    type: 'STOP_GAME'
+  return (dispatch, getState) => {
+    const { gameStatus } = getState()
+
+    if (gameStatus === 'GAME_OVER') {
+      return
+    }
+    
+    dispatch({ type: 'STOP_GAME' })
   }
 }
 
@@ -34,15 +46,17 @@ function drop() {
 
 export function dropTimer() {
   return (dispatch, getState) => {
-    if (getState().newShape) {
+    const { gameStatus, newShape } = getState()
+
+    if (newShape) {
       dispatch(getNewShape())
     }
 
-    if (getState().gameStatus === 'STOP' || getState().gameStatus === 'GAME_OVER') {
+    if (gameStatus === 'STOP' || gameStatus === 'GAME_OVER') {
       return
     }
 
-    if (getState().gameStatus === 'START') {
+    if (gameStatus === 'START') {
       dispatch(drop())
     }
 
@@ -53,39 +67,98 @@ export function dropTimer() {
 }
 
 export function accelerate() {
-  return {
-    type: 'ACCELERATE'
+  return (dispatch, getState) => {
+    const { gameStatus, currentShape } = getState()
+    if (gameStatus === 'STOP' || gameStatus === 'GAME_OVER') {
+      return
+    }
+
+    if (currentShape.length === 0) {
+      return
+    }
+
+    dispatch( { type: 'ACCELERATE' } )
   }
 }
 
 export function decelerate() {
-  return {
-    type: 'DECELERATE'
+  return (dispatch, getState) => {
+    const { gameStatus, currentShape } = getState()
+    if (gameStatus === 'STOP' || gameStatus === 'GAME_OVER') {
+      return
+    }
+
+    if (currentShape.length === 0) {
+      return
+    }
+
+    dispatch( { type: 'DECELERATE' } )
   }
 }
 
 export function hardDrop() {
-  return {
-    type: 'HARD_DROP'
+  return (dispatch, getState) => {
+    const { gameStatus, currentShape, position } = getState()
+    if (gameStatus === 'STOP' || gameStatus === 'GAME_OVER') {
+      return
+    }
+
+    if (currentShape.length === 0 || position[0] < -1) {
+      return
+    }
+
+    dispatch({
+      type: 'HARD_DROP'
+    })
   }
 }
 
 export function moveRight() {
-  return {
-    type: 'SHIFT',
-    payload: 1
+  return (dispatch, getState) => {
+    const { gameStatus, currentShape, newShape } = getState()
+    if (gameStatus === 'STOP' || gameStatus === 'GAME_OVER') {
+      return
+    }
+    
+    if (newShape || currentShape.length === 0) {
+      return
+    }
+
+    dispatch({
+      type: 'SHIFT',
+      payload: 1
+    })
   }
 }
 
 export function moveLeft() {
-  return {
-    type: 'SHIFT',
-    payload: -1
+  return (dispatch, getState) => {
+    const { gameStatus, currentShape, newShape } = getState()
+    if (gameStatus === 'STOP' || gameStatus === 'GAME_OVER') {
+      return
+    }
+    
+    if (newShape || currentShape.length === 0) {
+      return
+    }
+
+    dispatch({
+      type: 'SHIFT',
+      payload: -1
+    })
   }
 }
 
 export function rotate() {
-  return {
-    type: 'ROTATE'
+  return (dispatch, getState) => {
+    const { gameStatus, currentShape } = getState()
+    if (gameStatus === 'STOP' || gameStatus === 'GAME_OVER') {
+      return
+    }
+
+    if (currentShape.length === 0) {
+      return
+    }
+    dispatch({type: 'ROTATE'})
   }
 }

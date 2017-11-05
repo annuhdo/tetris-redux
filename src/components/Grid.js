@@ -23,6 +23,21 @@ const Board = styled('ul')`
   overflow: hidden;
 `
 
+const GameOver = styled('div') `
+	background: linear-gradient(0deg,rgba(185, 41, 101, 0.9),rgba(81,66,113,0.9));
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  flex-direction: column;
+	color: white;
+  font-size: 18px;
+	line-height: 2.3;
+	text-align: center;
+`
+
 const Grid = (props) => (
   <GridStyle>
     <Board>
@@ -33,9 +48,15 @@ const Grid = (props) => (
         position={[0, 0]}
         grid={true}
       />
-      {/* {renderBlocks(props.rows, props.cols)} */}
       <Game {...props} />
     </Board>
+
+    {props.gameStatus !== 'START' &&
+      <GameOver>
+        <h1>{ props.gameStatus === 'GAME_OVER' ? 'GAME OVER' : 'PAUSED' }</h1>
+        Score: {props.score}
+      </GameOver>
+    }
   </GridStyle>
 )
 
