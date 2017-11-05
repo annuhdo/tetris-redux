@@ -14,12 +14,9 @@ function rootReducer(state = initialState, action) {
   let willCollide = false
   let clearedGrid = {}
   let grid = [...state.grid]
-  let newShape = state.newShape
   let position = [...state.position]
-  let shadowPosition = [...state.shadowPosition]
   let currentShape = [...state.currentShape]
   let gameStatus = state.gameStatus
-  let accelerate = state.accelerate
   let score = state.score
 
   switch (action.type) {
@@ -27,12 +24,9 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         grid: resetGrid(),
-        position: [-2, 5],
-        shadowPosition: [-2, 5],
         currentShape: [],
         newShape: true,
         gameStatus: 'STOP',
-        accelerate: false,
         score: 0
       }
     case 'START_GAME':

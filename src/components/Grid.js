@@ -1,5 +1,4 @@
 import React from 'react'
-import Square from './Square'
 import ShapeView from './ShapeView'
 import styled from 'styled-components'
 import Game from './Game'

@@ -180,6 +180,7 @@ class Main extends Component {
   }
 
   handleKeyUp = (e) => {
+    e.preventDefault()
     switch (e.keyCode) {
       case 40:
         // down arrow
@@ -188,10 +189,8 @@ class Main extends Component {
         break
       case 32:
       // space
-        e.preventDefault()
         break
       case 13:
-        e.preventDefault()
         break
       default:
         break
@@ -199,6 +198,7 @@ class Main extends Component {
   }
 
   handleKeyDown = (e) => {
+    e.preventDefault()
     switch (e.keyCode) {
       case 13:
         // enter
@@ -243,10 +243,7 @@ class Main extends Component {
         this.moves('up')
         break
       case 'reset':
-        this.props.resetGrid()
-        this.setState({
-          resume: false
-        })
+        this.reset()
         break
       case 'play':
         this.play()
@@ -264,6 +261,7 @@ class Main extends Component {
     switch (e.target.name) {
       case 'down':
         this.accelerate()
+        break
       default:
         break
     }
@@ -274,9 +272,17 @@ class Main extends Component {
     switch (e.target.name) {
       case 'down':
         this.decelerate()
+        break
       default:
         break
     }
+  }
+
+  reset = () => {
+    this.props.resetGrid()
+    this.setState({
+      resume: false
+    })
   }
 
   play = () => {
