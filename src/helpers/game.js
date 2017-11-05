@@ -9,7 +9,7 @@ export const checkCollisions = (shape, position, grid) => {
           return false
         }
         if (grid[row + position[0]] !== 0 &&
-        grid[row + position[0]][col + position[1]] !== 0) {
+          grid[row + position[0]][col + position[1]] !== 0) {
           return true
         }
       }
@@ -62,7 +62,7 @@ export const clearLines = (originalGrid) => {
     }
     if (toClear) {
       score += 1
-      if (score > 4) {
+      if (score >= 4) {
         points += 1200
         score -= 4
       }
@@ -71,24 +71,21 @@ export const clearLines = (originalGrid) => {
     }
   }
 
-  while (score > 0) {
-    if (score > 4) {
-      score -= 4
-      points += 1200
-    }
-    else if (score > 3) {
-      score -= 3
-      points += 300
-    }
-    else if (score > 2) {
-      score -= 2
-      points += 100
-    }
-    else {
-      score -= 1
-      points += 40
-    }
+  if (score >= 4) {
+    points += Math.floor(score / 4) * 1200
+    score = score % 4
   }
-  
-  return {grid, score: points}
+  if (score >= 3) {
+    points += Math.floor(score / 3) * 300
+    score = score % 3
+  }
+  if (score >= 2) {
+    points += Math.floor(score / 2) * 100
+    score = score % 2
+  }
+  if (score >= 1) {
+    points += score + 40
+  }
+
+  return { grid, score: points }
 }
