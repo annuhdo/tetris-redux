@@ -3,6 +3,10 @@
 Tetris game built with React + Redux 👾
 [Check it out!](https://tetris-redux-xfvkqhjzxp.now.sh/ "Game site")
 
+Built using:
+- [Redux](http://redux.js.org/) for state and action management.
+- [React](https://github.com/facebook/react) for UI view.
+
 ![Tetris demo](./tetris-redux.gif "Tetris demo")
 
 # Controls
