@@ -20,8 +20,8 @@ const Emulator = styled('div') `
 `
 
 const OuterGame = styled('div') `
-  width: 400px;
-  height: 100vh;
+  width: 280px;
+  height: auto;
   box-sizing: border-box;
   position: relative;
   display: flex;
@@ -31,10 +31,10 @@ const OuterGame = styled('div') `
   &:before {
     content: ' ';
     background: #031850;
-    width: 500px;
+    width: 320px;
     height: 100%;
     position: absolute;
-    left: -50px;
+    left: -20px;
     z-index: -1
   }
 `
@@ -44,13 +44,13 @@ const Controls = styled('div') `
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  height: 270px;
+  height: 230px;
   width: 100%;
 `
 
 const DirButtons = styled('div') `
-  width: 210px;
-  height: 200px;
+  width: 190px;
+  height: 130px;
   border-radius: 5px;
   border-top-right-radius: 50px;
   border-bottom-left-radius: 50px;
@@ -135,7 +135,7 @@ const rainbowColor = keyframes`
 const Footnote = styled('div')`
   position: absolute;
   padding-bottom: 20px;
-  bottom: 20px;
+  bottom: -50px;
   font-size: 12px;
   text-transform: uppercase;
   color: #fff;
@@ -345,8 +345,8 @@ class Main extends Component {
             <DirButtons>
               <Button
                 name="up"
-                width='50'
-                height='60'
+                width='30'
+                height='40'
                 borderRadius='5px'
                 left='0'
                 right='0'
@@ -356,8 +356,8 @@ class Main extends Component {
 
               <Button
                 name="left"
-                width='60'
-                height='50'
+                width='40'
+                height='30'
                 borderRadius='5px'
                 top='0'
                 bottom='0'
@@ -367,8 +367,8 @@ class Main extends Component {
 
               <Button
                 name="right"
-                width='60'
-                height='50'
+                width='40'
+                height='30'
                 borderRadius='5px'
                 top='0'
                 bottom='0'
@@ -378,8 +378,8 @@ class Main extends Component {
 
               <Button
                 name="down"
-                width='50'
-                height='60'
+                width='30'
+                height='40'
                 borderRadius='5px'
                 left='0'
                 right='0'

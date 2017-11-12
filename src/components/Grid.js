@@ -4,8 +4,8 @@ import styled from 'styled-components'
 import Game from './Game'
 
 const GridStyle = styled('div')`
-  width: 400px;
-  height: 680px;
+  width: 250px;
+  height: 425px;
   display: flex;
   position: relative;
   background: linear-gradient(0deg, #132967, #22449d);

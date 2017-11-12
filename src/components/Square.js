@@ -2,7 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-const sqSize = 40
+const sqSize = 25
 
 const SquareUnit = styled.div`
   position: absolute;
