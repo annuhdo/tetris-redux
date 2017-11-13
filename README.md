@@ -1,7 +1,7 @@
 # Tetris 🎮
 
 Tetris game built with React + Redux 👾
-[Check it out!](https://tetris-redux-xfvkqhjzxp.now.sh/ "Game site")
+[Check it out!](https://tetris-redux-cghslsxrpi.now.sh "Game site")
 
 Built using:
 - [Redux](http://redux.js.org/) for state and action management.
